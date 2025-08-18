@@ -1,0 +1,15 @@
+# Core LangChain libraries
+langchain>=0.0.204
+langchain-core>=0.0.204
+
+# Hugging Face Integration
+langchain-huggingface>=0.0.204
+transformers>=4.30.0
+huggingface-hub>=0.15.1
+
+# Environment Variable Management
+python-dotenv>=1.0.0
+
+# Machine Learning Utilities
+numpy>=1.24.0
+scikit-learn>=1.2.2
