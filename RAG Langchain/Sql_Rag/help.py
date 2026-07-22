@@ -6,11 +6,11 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 from ollama import chat
+from langchain_core.runnables import RunnableParallel 
 
+#### ************************************************************************************SQL***********************************************************************************
 
-
-
-def inital_step(text_input):
+def sql_text(text_input):
     embedding = OllamaEmbeddings(model="nomic-embed-text")
 
     vector_store = FAISS.load_local(
@@ -173,7 +173,7 @@ def inital_step(text_input):
 
 
 
-def image_input(image_path):
+def sql_image(image_path):
 
     # --------------------------------------------------
     # STEP 1 : Extract ONLY the SQL question
@@ -301,3 +301,64 @@ SQL:
     response = main_chain.invoke(extracted_question)
 
     return response
+
+
+
+
+
+def sql_text_image(question, image_path):
+    # --------------------------------------------------
+    # STEP 1 : Extract ONLY the SQL question from the image
+    # --------------------------------------------------
+    sql_answer1 = sql_image(image_path)
+    sql_answer2 = sql_text(question)
+
+    # --------------------------------------------------
+    # STEP 2 : Combine the extracted question and the text input
+    # --------------------------------------------------
+    # Build the Parallel Chain
+    prompt = f"""
+You are an SQL expert.
+
+Image SQL:
+{sql_answer1}
+
+User Question:
+{sql_answer2}
+
+Use BOTH pieces of information to produce the final SQL answer.
+
+Output exactly in this format:
+
+Kindly go through the provided information.
+<final_answer> -> By Prince Kushwaha
+
+Do not include any explanation or markdown.
+Replace <final_answer> with the actual SQL answer.
+"""
+    
+
+    llm = ChatOllama(
+        model="llama3.2",
+        temperature=0
+    )
+    response = llm.invoke(prompt)
+
+    return response.content
+
+
+
+
+
+### *************************************************************************Excel**************************************************************************
+
+
+
+def excel_text(question):
+    ...
+
+def excel_image(image_path):
+    ...
+
+def excel_text_image(question, image_path):
+    ...
