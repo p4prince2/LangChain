@@ -1,6 +1,8 @@
+from click import prompt
 from langchain_core.runnables import RunnableParallel
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
+from streamlit import text_input
 from langchain_community.vectorstores import FAISS
 from langchain_ollama import OllamaEmbeddings
 from langchain_ollama import ChatOllama
@@ -355,10 +357,185 @@ Replace <final_answer> with the actual SQL answer.
 
 
 def excel_text(question):
-    ...
+        # Load LLM
+    llm = ChatOllama(
+        model="llama3.2",
+        temperature=0
+    )
+
+    # Prompt
+    prompt = PromptTemplate(
+        template="""
+    You are an Excel expert.
+
+    Answer the following Excel question.
+
+    Rules:
+    1. Return only the final answer.
+    2. If the answer is an Excel formula, return only the formula.
+    3. Do not use markdown.
+    4. Keep the answer concise.
+
+    Question:
+    {question}
+
+    Answer:
+    """,
+        input_variables=["question"],
+    )
+
+    # Output Parser
+    parser = StrOutputParser()
+
+    # Chain
+    main_chain = prompt | llm | parser
+
+    # Generate Response
+    response = main_chain.invoke({
+        "question": text_input
+    })
+
+    return response.content.strip()
+
+
+
+
+
+
+
+
 
 def excel_image(image_path):
-    ...
+    # --------------------------------------------------
+    # STEP 1 : Extract ONLY the Excel question
+    # --------------------------------------------------
+
+    system_prompt = """
+You are an OCR assistant.
+
+Your task is to read the screenshot and extract ONLY the Excel question.
+
+Rules:
+- Ignore the Excel ribbon.
+- Ignore row and column headers.
+- Ignore formulas already written.
+- Ignore buttons and menus.
+- Ignore answer choices if not part of the question.
+- Return ONLY the question text.
+
+Do not explain anything.
+Do not add headings.
+"""
+
+    response = chat(
+        model="qwen2.5vl:7b",
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": "Extract only the Excel question.",
+                "images": [image_path]
+            }
+        ]
+    )
+
+    extracted_question = response.message.content.strip()
+
+    print("\nExtracted Question:\n")
+    print(extracted_question)
+
+    # --------------------------------------------------
+    # STEP 2 : Load LLM
+    # --------------------------------------------------
+
+    llm = ChatOllama(
+        model="llama3.2",
+        temperature=0
+    )
+
+    # --------------------------------------------------
+    # STEP 3 : Prompt
+    # --------------------------------------------------
+
+    prompt = PromptTemplate(
+        template="""
+You are an Excel expert.
+
+Answer the following Excel question.
+
+Rules:
+1. Provide the correct answer only.
+2. If a formula is required, return only the formula.
+3. If an explanation is required, keep it concise.
+4. Do not use markdown.
+
+Question:
+{question}
+
+Answer:
+""",
+        input_variables=["question"],
+    )
+
+    parser = StrOutputParser()
+
+    chain = prompt | llm | parser
+
+    # --------------------------------------------------
+    # STEP 4 : Generate Answer
+    # --------------------------------------------------
+
+    answer = chain.invoke({
+        "question": extracted_question
+    })
+
+    return answer 
 
 def excel_text_image(question, image_path):
-    ...
+    """
+    question   : Extracted text from OCR
+    image_path : Path to the Excel screenshot (optional, not used here)
+    """
+
+    # Load LLM
+    llm = ChatOllama(
+        model="llama3.2",
+        temperature=0
+    )
+
+    # Prompt
+    prompt = PromptTemplate(
+        template="""
+You are an Excel expert.
+
+Answer the following Excel question.
+
+Rules:
+1. Return only the final answer.
+2. If the answer is an Excel formula, return only the formula.
+3. If the question asks for a value, return only the value.
+4. If an explanation is needed, keep it brief.
+5. Do not use markdown.
+
+Question:
+{question}
+
+Answer:
+""",
+        input_variables=["question"],
+    )
+
+    parser = StrOutputParser()
+
+    # Chain
+    chain = prompt | llm | parser
+
+    # Generate answer
+    response = chain.invoke({
+        "question": question
+    })
+
+    return response
