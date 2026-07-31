@@ -73,12 +73,6 @@ def sql_text(text_input):
 
 
 
-# def image_input( image_path):
-
-#     system_prompt = """
-#     Act as an expert OCR and data extraction assistant.
-
-#     Please format your response clearly using the following headings:
 
 #     ### User Statement
 #     Extract the introductory text written by the user at the very top of the image.
