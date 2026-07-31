@@ -75,8 +75,6 @@ def sql_text(text_input):
 
 
 
-#     ### Question Description
-#     Extract the problem statement from the left-hand panel under the Description tab.
 
 #     ### SQL Query
 #     Extract the exact SQL code written inside the dark-themed code editor on the right.
