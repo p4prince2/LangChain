@@ -74,8 +74,6 @@ def sql_text(text_input):
 
 
 
-#     ### User Statement
-#     Extract the introductory text written by the user at the very top of the image.
 
 #     ### Question Description
 #     Extract the problem statement from the left-hand panel under the Description tab.
