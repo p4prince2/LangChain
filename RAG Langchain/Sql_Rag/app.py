@@ -1,26 +1,4 @@
 
-#     # Case 1 : Text + Image
-#     # -------------------------
-#     if text_input and image is not None:
-#         st.success("Received both Text and Image")
-
-#         # Replace this with your model
-#         response = f"""
-#         Text:
-#         {text_input}
-
-#         Image received successfully.
-
-#         (Call your VLM here.)
-#         """
-
-#     # -------------------------
-#     # Case 2 : Only Text
-#     # -------------------------
-#     elif text_input:
-#         st.success("Received only Text")
-
-#         # Replace this with your LLM
 #         response = help.inital_step(text_input)
 
 #     # -------------------------
