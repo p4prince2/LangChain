@@ -1,22 +1,4 @@
 
-
-# image = None
-
-# if uploaded_image is not None:
-#     image = Image.open(uploaded_image)
-#     st.image(image, caption="Uploaded Image", width="stretch")
-
-# # -------------------------
-# # Submit Button
-# # -------------------------
-# if st.button("Submit"):
-
-#     # Check if at least one input is provided
-#     if not text_input and image is None:
-#         st.warning("Please provide either a text question or an image.")
-#         st.stop()
-
-#     # -------------------------
 #     # Case 1 : Text + Image
 #     # -------------------------
 #     if text_input and image is not None:
