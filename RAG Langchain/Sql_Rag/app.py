@@ -1,24 +1,4 @@
-# import streamlit as st
-# from PIL import Image
-# import help 
 
-
-# st.set_page_config(page_title="Multimodal Chat", page_icon="🤖")
-
-# st.title(" Multimodal Chat")
-
-# # -------------------------
-# # User Inputs
-# # -------------------------
-# text_input = st.text_area(
-#     "Enter your question (Optional)",
-#     placeholder="Ask something..."
-# )
-
-# uploaded_image = st.file_uploader(
-#     "Upload an image (Optional)",
-#     type=["png", "jpg", "jpeg"]
-# )
 
 # image = None
 
