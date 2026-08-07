@@ -77,16 +77,7 @@ def sql_text(text_input):
 
 
 
-#         model="qwen2.5vl:7b",
-#         messages=[
-#             {
-#                 "role": "system",
-#                 "content": system_prompt
-#             },
-#             {
-#                 "role": "user",
-#                 "content": "Extract all requested information from this image.",
-#                 "images": ["sql_eorror.png"]
+
 #             }
 #         ]
 #     )
