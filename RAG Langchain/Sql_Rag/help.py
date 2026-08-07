@@ -76,14 +76,7 @@ def sql_text(text_input):
 
 
 
-#     ### SQL Query
-#     Extract the exact SQL code written inside the dark-themed code editor on the right.
 
-#     ### Error Message
-#     Extract the red error message displayed at the bottom right.
-#     """
-
-#     response = chat(
 #         model="qwen2.5vl:7b",
 #         messages=[
 #             {
