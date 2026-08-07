@@ -1,28 +1,4 @@
 
-#         response = help.inital_step(text_input)
-
-#     # -------------------------
-#     # Case 3 : Only Image
-#     # -------------------------
-#     else:
-#         st.success("Received only Image")
-
-#         # Replace this with your Vision Model
-        
-#         import tempfile
-
-#         if uploaded_image is not None:
-
-#             with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
-#                 tmp.write(uploaded_image.getbuffer())
-#                 temp_path = tmp.name
-
-#             response = help.image_input(temp_path)
-
-
-
-#     st.subheader("Response")
-#     st.write(response)
 
 
 
