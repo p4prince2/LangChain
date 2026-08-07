@@ -78,22 +78,6 @@ def sql_text(text_input):
 
 
 
-#             }
-#         ]
-#     )
-
-#     response_image_test =response.message.content
-
-
-#     llm = ChatOllama(
-#         model="llama3.2",
-#         temperature=0
-#     )
-
-
-#     embedding = OllamaEmbeddings(model="nomic-embed-text")
-
-#     vector_store = FAISS.load_local(
 #         "faiss_index",
 #         embedding,
 #         allow_dangerous_deserialization=True
